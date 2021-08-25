@@ -2,31 +2,46 @@ import { BaseElement } from "./BaseElement";
 import { ShadowElement } from "./ShadowElement";
 
 
-export type MediaTypes = 'IMG' | 'YT';
+export type MediaTypes = 'img' | 'youtube';
 
 class MediaItem extends BaseElement {
 
     ImageModal: ShadowElement = null;
     Content: BaseElement = null;
     _CloseBtn: BaseElement = null;
-    constructor(url: string, type: MediaTypes = 'IMG'){
+    url: string = '';
+    
+    constructor(url: string, type: MediaTypes = 'img'){
     
         super('div', {
             position:"relative",
             display:"flex",
             justifyContent:'center',
         });
-        const htmlContentType: keyof HTMLElementTagNameMap = type == 'IMG' ? 'img' : 'iframe'
-      
+        const htmlContentType: keyof HTMLElementTagNameMap = type == 'img' ? 'img' : 'iframe'
+        this.url = url;
         this.Content = new BaseElement(htmlContentType, {
             height:"100%",
             width:"100%",
-
-            objectFit: type == 'IMG' ? 'contain' : 'fill',
-            border:"none"
+            background:"black",
+            objectFit: type == 'img' ? 'contain' : 'fill',
+            border:"none",
+            visibility: type == 'img' ? 'visible' : 'hidden',
         })
         this.Content.root.onclick = this.openModal;
-        this.Content.root.setAttribute('src', url);
+        this.Content.root.setAttribute('src', url + `?theme=dark`);
+        if(htmlContentType == 'iframe'){
+           this.Content.root.onload = (e) => {
+               this.Content.root.style.visibility = 'visible'
+           }
+
+
+
+        }
+
+    
+        
+        this.Content.root.setAttribute('allowtransparency', 'true');
         this.Content.root.className = 'media-content'
         this.root.appendChild(this.Content.root)
         this.ImageModal = new ShadowElement('div', {
@@ -82,7 +97,7 @@ class MediaItem extends BaseElement {
         })
         this._CloseBtn.root.onclick = this.closeModal
         this.ImageModal.shadowElementRoot.appendChild(this._CloseBtn.root);
-        var imgClone = new BaseElement(type == 'IMG' ? 'img' : 'iframe', {
+        var imgClone = new BaseElement(type == 'img' ? 'img' : 'iframe', {
             maxHeight:"100vh",
             height:"100%",
             width:"100%",
@@ -95,6 +110,12 @@ class MediaItem extends BaseElement {
         
     }
 
+    setIframeVisibility = (value: 'visible' | 'hidden') => {
+        if(this.Content.root.tagName  == 'IFRAME'){
+            this.Content.root.style.visibility = value
+        }
+    }
+
     openModal = (e) => {
         document.body.appendChild(this.ImageModal.root)
     }
@@ -102,6 +123,8 @@ class MediaItem extends BaseElement {
     closeModal = (e) => {
         document.body.removeChild(this.ImageModal.root)
     }
+
+
 
 } 
 

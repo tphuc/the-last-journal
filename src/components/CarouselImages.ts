@@ -1,7 +1,7 @@
 import { BaseElement } from "./BaseElement";
 import { ShadowElement } from "./ShadowElement";
 import * as CSS from 'csstype';
-import { Color } from "../../src/configs/Color";
+import { Color } from "../configs/Color";
 import { MediaItem, MediaTypes } from "./MediaItem";
 
 
@@ -81,8 +81,6 @@ class CarouselImages extends ShadowElement {
                     'control-prev:hover':{
                         'background-color':"rgba(0,0,0,0.6)",
                     }
-
-                  
 
 
                 },
@@ -170,6 +168,8 @@ class CarouselImages extends ShadowElement {
 
         
     }
+
+
 }
 
 

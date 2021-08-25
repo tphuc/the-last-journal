@@ -23,7 +23,7 @@ class SoundIcon extends BaseElement {
             width: "44px",
             height: "20px",
             cursor:"pointer",
-            backgroundColor: Color.Dark1,
+            // backgroundColor: Color.Dark1,
             padding:"5px 5px"
         })
 

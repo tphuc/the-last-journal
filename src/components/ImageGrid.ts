@@ -196,8 +196,9 @@ class ImageGrid extends ShadowElement {
             this._cols[colIndex].root.appendChild(img.root)
         }
 
-
     }
+
+
 }
 
 

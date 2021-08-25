@@ -23,6 +23,7 @@
     "webpack-dev-server": "^3.10.1"
   },
   "dependencies": {
-    "animejs": "^3.2.1"
+    "animejs": "^3.2.1",
+    "navigo": "^8.11.1"
   }
 }
