@@ -102,8 +102,8 @@ class CarouselImages extends ShadowElement {
         })
         this.shadowElementRoot.appendChild(this.Slides.root)
 
-        this.MediaNodes = images.map((item) => {
-            var media = new MediaItem(item.url, item.type)
+        this.MediaNodes = images.map((item, index) => {
+            var media = new MediaItem(item.url, item.type, index)
             media.root.className='carousel-item'
             this.Slides.root.appendChild(media.root)
             return media;

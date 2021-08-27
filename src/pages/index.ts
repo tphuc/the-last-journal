@@ -14,14 +14,11 @@ function li(a, b, n) {
 const fakeData = [
     {
         name: "Introduction: President and the Press",
+        url: '/posts/123',
         timestamp: new Date()
     },
     {
-        name: "The fall of the Cabal, 1",
-        timestamp: new Date()
-    },
-    {
-        name: "The return of the King",
+        name: "Fall of the Cabal (part 1): Things that make you go hmmm",
         timestamp: new Date()
     },
 ]
@@ -29,6 +26,11 @@ const fakeData = [
 class Pages {
 
     listeners: { [k: string]: any };
+    router: any;
+
+    constructor(router){
+        this.router = router;
+    }
 
     home = () => {
         var Centered = new ShadowElement('div', {
@@ -100,14 +102,16 @@ class Pages {
         title.root.className = 'ml3'
         title.root.textContent = 'The Last Journal'
         title.root.innerHTML = title.root.textContent.replace(/\S/g, `<span style='color:${Color.Primary1};' class='letter'>$&</span>`);
+
+        // .add({
+        //     targets: LogoElement.root,
+        //     opacity: [0, 1],
+        //     easing: "easeInOutQuad",
+        //     duration: 1120,
+        //     delay: (el, i) => 150 * (i + 1)
+        // })
         anime.timeline()
-            .add({
-                targets: LogoElement.root,
-                opacity: [0, 1],
-                easing: "easeInOutQuad",
-                duration: 1120,
-                delay: (el, i) => 150 * (i + 1)
-            })
+  
             .add({
                 targets: title.root.querySelectorAll('.letter'),
                 opacity: [0, 1],
@@ -134,13 +138,26 @@ class Pages {
         });
         SearchInput.root.setAttribute('placeholder', 'search for content...')
         SearchInput.root.setAttribute('type', 'text')
-        inputWrapper.root.appendChild(SearchInput.root)
-        var postWrapper = new BaseElement('div', {
-            marginTop:'50px'
+        // inputWrapper.root.appendChild(SearchInput.root)
+
+        var tableOfContent = new BaseElement('h4', {
+            color: Color.Primary1
         })
+        tableOfContent.root.innerText = 'Table of contents'
+
+        var postWrapper = new BaseElement('div', {
+            marginTop:'50px',
+            marginBottom:"100px",
+            minHeight: '900px'
+        })
+
+       
+
         Centered.shadowElementRoot.appendChild(LogoElement.root)
         Centered.shadowElementRoot.appendChild(title.root)
         Centered.shadowElementRoot.appendChild(inputWrapper.root)
+        postWrapper.root.appendChild(document.createElement('hr'))
+        postWrapper.root.appendChild(tableOfContent.root)
         root.appendChild(Centered.root);
         Centered.shadowElementRoot.appendChild(postWrapper.root)
 
@@ -152,12 +169,41 @@ class Pages {
                 display:"block",
                 color: Color.Primary1,
                 padding:"10px 0px",
-                cursor:"pointer"
+                cursor:"pointer",
+                textDecoration:"underline"
             })
 
             El.root.innerText = item.name;
+            El.root.onclick = () => {
+                this.router.navigate(item.url)
+            }
            postWrapper.root.appendChild(El.root)
         })
+
+        var disclaimerTitle = new BaseElement('h4', {
+            color: Color.Primary1
+        })
+        disclaimerTitle.root.innerText = 'Disclaimer'
+        
+        var disclaimerText = `The materials appearing on this website do not constitute legal advice and are provided for general information purposes only. No warranty, whether express or implied is given in relation to such materials.` 
+        var disclaimerTextNode = new BaseElement('p', {
+            color: Color.Primary1,
+            textAlign:"center"
+        })
+        disclaimerTextNode.root.innerText = disclaimerText
+
+        Centered.shadowElementRoot.appendChild(document.createElement('hr'))
+        Centered.shadowElementRoot.appendChild(disclaimerTitle.root)
+        Centered.shadowElementRoot.appendChild(disclaimerTextNode.root)
+
+        var copyright = new BaseElement('p',
+        {
+            color: Color.Primary1
+        })
+
+        copyright.root.innerText = 'Copyright © 2021-2022'
+        Centered.shadowElementRoot.appendChild(copyright.root)
+
 
     }
 

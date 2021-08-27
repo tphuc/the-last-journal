@@ -11,7 +11,7 @@ class MediaItem extends BaseElement {
     _CloseBtn: BaseElement = null;
     url: string = '';
     
-    constructor(url: string, type: MediaTypes = 'img'){
+    constructor(url: string, type: MediaTypes = 'img', index?: number){
     
         super('div', {
             position:"relative",
@@ -20,6 +20,7 @@ class MediaItem extends BaseElement {
         });
         const htmlContentType: keyof HTMLElementTagNameMap = type == 'img' ? 'img' : 'iframe'
         this.url = url;
+        var urlParams = type == 'youtube' ? `?autoplay=${index == 0 ? 1 : 0}&rel=0` : ''
         this.Content = new BaseElement(htmlContentType, {
             height:"100%",
             width:"100%",
@@ -29,12 +30,13 @@ class MediaItem extends BaseElement {
             visibility: type == 'img' ? 'visible' : 'hidden',
         })
         this.Content.root.onclick = this.openModal;
-        this.Content.root.setAttribute('src', url + `?theme=dark`);
+        this.Content.root.setAttribute('src', url + urlParams);
         if(htmlContentType == 'iframe'){
            this.Content.root.onload = (e) => {
                this.Content.root.style.visibility = 'visible'
            }
 
+           
 
 
         }

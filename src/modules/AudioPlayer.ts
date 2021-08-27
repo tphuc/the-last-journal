@@ -12,7 +12,7 @@ class AudioPlayer {
     constructor(url: string){
         this.audio = new Audio(url);
         this.audio.loop = false;
-        this.audio.volume = 0.1
+        this.audio.volume = 0.5
         this.audio.onended = () => this.onFinish()
     }
 
@@ -25,7 +25,7 @@ class AudioPlayer {
 
 
     public play = () => {
-        this.audio.volume = 0.1
+        this.audio.volume = 0.5
         this.audio.play()
         
     }

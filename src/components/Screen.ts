@@ -79,25 +79,36 @@ class Screen extends ShadowElement {
                         opacity: 1
                     },
 
+                    '.content-wrapper':{
+                        width:"46.2%",
+                    },
+
                     '@media only screen and (max-width: 800px)': {
                         '.media-container': {
                             flex: "none",
                             height: '42vh',
-                            padding: "5px 5px"
+                            padding: "5px 5px",
                         },
                         '.wrapper': {
                             "flex-direction": "column"
-                        }
+                        },
+                        '.content-wrapper': {
+                            width:"100%",
+                        },
                     },
                     '@media only screen and (max-width: 600px)': {
                         '.media-container': {
                             flex: "none",
                             height: '24vh',
-                            padding: "5px 5px"
+                            padding: "5px 5px",
+
                         },
                         '.wrapper': {
                             "flex-direction": "column"
-                        }
+                        },
+                        '.content-wrapper': {
+                            width:"100%",
+                        },
                     },
                     '::-webkit-scrollbar': {
                         width: '0px',
@@ -164,8 +175,12 @@ class Screen extends ShadowElement {
             display: "flex",
             flexDirection: "column",
             flex: 1,
+            
 
         })
+
+        contentContainerWrapper.root.className = 'content-wrapper'
+
         // this.MediaContainer.root.appendChild(carousel.root)
 
 
@@ -181,7 +196,8 @@ class Screen extends ShadowElement {
 
         this.ContentContainer.root.appendChild(carouselText.root)
         this.ContentContainer.root.className = 'content-container'
-        this.Pagination = new PageIndicator()
+        this.Pagination = new PageIndicator(data.pages.length)
+
         contentContainerWrapper.root.appendChild(this.ContentContainer.root)
         contentContainerWrapper.root.appendChild(this.Pagination.root)
         this.shadowElementRoot.appendChild(this.MediaContainer.root);
@@ -200,6 +216,8 @@ class Screen extends ShadowElement {
             this.activePage = carouselText.index
             this.MediaContainer.root.appendChild(this.MediaPages[this.activePage].root)
             this.AudioBackgroundSequence.currentSessionIndex = this.activePage
+            this.Pagination.currentPage = carouselText.index + 1
+            this.Pagination.updatePercentage()
             // let mediaDisplay = data.pages[this.activePage].find(item => item.type == 'youtube') ? 'slides' : 'grid'
 
         }

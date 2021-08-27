@@ -9,7 +9,7 @@ window.onpopstate = () => {
     console.log(window.location.origin)
 }
 
-var PagesControl = new Pages() 
+
 
 function test() {
 
@@ -45,9 +45,11 @@ function test() {
 console.log(window.location.origin)
 const router = new Navigo('/',  { hash: true });
 
+var PagesControl = new Pages(router) 
+
 router
     .on("/", () => {
-        router.navigate('/posts/123')
+        // router.navigate('/posts/123')
         PagesControl.home()
     })
     .on("/posts/:name", () => {
