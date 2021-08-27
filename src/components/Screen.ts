@@ -8,6 +8,7 @@ import { AudioPlayer } from "../modules/AudioPlayer";
 import { PageIndicator } from "./PageIndicator";
 import { CarouselText } from "./CarouselText";
 import { MediaItem } from "./MediaItem";
+import { AudioSequence } from "../../src/modules/AudioSequence";
 
 
 function li(a, b, n) {
@@ -30,6 +31,8 @@ class Screen extends ShadowElement {
     mediaDisplayType: string;
 
     MediaPages: any[];
+
+    AudioBackgroundSequence: AudioSequence;
 
 
     constructor(tag?: keyof HTMLElementTagNameMap, intitialStyle?: CSS.Properties) {
@@ -120,8 +123,10 @@ class Screen extends ShadowElement {
         // preventIframeFlash()
         this.shadowElementRoot.className = 'wrapper'
 
+        var music = data.pages.map(item => item.music)
 
-
+        this.AudioBackgroundSequence = new AudioSequence(music)
+        this.AudioBackgroundSequence.player.play()
 
         this.MediaContainer = new BaseElement('div', {
             position: "relative",
@@ -131,7 +136,9 @@ class Screen extends ShadowElement {
         this.MediaContainer.root.className = 'media-container'
 
         this.MediaPages = data.pages.map(item => {
+            
             let mediaDisplay = item.media.find(item => item.type == 'youtube') ? 'slides' : 'grid'
+            mediaDisplay = item.mediaType || mediaDisplay
             if (mediaDisplay == 'grid') {
                 let media = new ImageGrid(item.media, {
                     maxCols: 1,
@@ -192,14 +199,14 @@ class Screen extends ShadowElement {
             this.MediaContainer.root.removeChild(this.MediaPages[this.activePage].root)
             this.activePage = carouselText.index
             this.MediaContainer.root.appendChild(this.MediaPages[this.activePage].root)
+            this.AudioBackgroundSequence.currentSessionIndex = this.activePage
             // let mediaDisplay = data.pages[this.activePage].find(item => item.type == 'youtube') ? 'slides' : 'grid'
 
         }
 
 
 
-        // var audio = new AudioPlayer('https://www.fesliyanstudios.com/musicfiles/2020-10-27_-_Beyond_The_Stars_-_www.FesliyanStudios.com_Steve_Oxen/2020-10-27_-_Beyond_The_Stars_-_www.FesliyanStudios.com_Steve_Oxen.mp3')
-        // audio.play()
+        
 
 
 

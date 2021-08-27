@@ -37,7 +37,7 @@ class CarouselText extends ShadowElement {
                         "box-sizing":"border-box",
                         padding:"20px 20px",
                         'min-width':"100%",
-                        'color': '#fff',
+                        'color': Color.Primary1,
                         'scroll-snap-align':"center",
                         'overflow':"hidden"
                        

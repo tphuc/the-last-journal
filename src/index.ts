@@ -24,11 +24,21 @@ function test() {
 
 
     let root = document.getElementById('root')
-
     let HeaderBar = new HeaderBarController('The end of the worlds as we know it')
 
     root.appendChild(Flex.root)
     Flex.root.appendChild(HeaderBar.root)
+
+    HeaderBar.SoundPlayerIcon.onPlay = () => {
+        page.AudioBackgroundSequence.play()
+    }
+
+    HeaderBar.SoundPlayerIcon.onPause = () => {
+        page.AudioBackgroundSequence.pause()
+    }
+
+
+
     Flex.root.appendChild(page.root)
 }
 

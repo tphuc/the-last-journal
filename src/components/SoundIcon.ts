@@ -15,6 +15,8 @@ class SoundIcon extends BaseElement {
 
     isPlaying: boolean = false;
 
+    onPlay: () => void;
+    onPause: () => void;
 
     constructor() {
         super('div', {
@@ -124,6 +126,7 @@ class SoundIcon extends BaseElement {
         this.animation2.play()
         this.animation3.play()
         this.isPlaying = true
+        this.onPlay && this.onPlay()
 
 
     }
@@ -133,6 +136,8 @@ class SoundIcon extends BaseElement {
         this.animation2.pause()
         this.animation3.pause()
         this.isPlaying = false
+        this.onPlay && this.onPause()
+        
     }
 
 }
