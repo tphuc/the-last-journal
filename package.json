@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "animejs": "^3.2.1",
+    "firebase": "^8.10.0",
     "navigo": "^8.11.1"
   }
 }

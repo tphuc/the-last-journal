@@ -17,7 +17,7 @@ function li(a, b, n) {
 
 
 
-const data = require('../testdata.json')
+
 class Screen extends ShadowElement {
 
     contentText: string = '';
@@ -34,8 +34,9 @@ class Screen extends ShadowElement {
 
     AudioBackgroundSequence: AudioSequence;
 
+    data: any = null;
 
-    constructor(tag?: keyof HTMLElementTagNameMap, intitialStyle?: CSS.Properties) {
+    constructor(data: any) {
 
         super('div',
             {
@@ -131,6 +132,7 @@ class Screen extends ShadowElement {
                 }
             });
 
+        this.data = data
         // preventIframeFlash()
         this.shadowElementRoot.className = 'wrapper'
 
@@ -152,8 +154,8 @@ class Screen extends ShadowElement {
             mediaDisplay = item.mediaType || mediaDisplay
             if (mediaDisplay == 'grid') {
                 let media = new ImageGrid(item.media, {
-                    maxCols: 1,
-                    maxImgPerCol: 5
+                    maxCols: 3,
+                    maxImgPerCol: 2
                 })
                 return media
             }
@@ -229,6 +231,11 @@ class Screen extends ShadowElement {
 
 
 
+    }
+
+
+    cleanUp = () => {
+        this.AudioBackgroundSequence.pause()
     }
 
 

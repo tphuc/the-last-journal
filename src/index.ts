@@ -3,44 +3,22 @@ import { HeaderBarController } from "./components/HeaderBar";
 import { Screen } from "./components/Screen";
 import Navigo from "navigo";
 import { Pages } from "./pages";
-
-
+import { firestore } from './firebase'
+const data = require('./testdata.json')
 window.onpopstate = () => {
     console.log(window.location.origin)
 }
 
 
-
-function test() {
-
-
-    let page = new Screen();
-    let Flex = new BaseElement('div', {
-        display: "flex",
-        flexDirection: "column",
-        width: "100vw",
-        height: "100vh"
-    })
-
-
-    let root = document.getElementById('root')
-    let HeaderBar = new HeaderBarController('The end of the worlds as we know it')
-
-    root.appendChild(Flex.root)
-    Flex.root.appendChild(HeaderBar.root)
-
-    HeaderBar.SoundPlayerIcon.onPlay = () => {
-        page.AudioBackgroundSequence.play()
-    }
-
-    HeaderBar.SoundPlayerIcon.onPause = () => {
-        page.AudioBackgroundSequence.pause()
-    }
-
-
-
-    Flex.root.appendChild(page.root)
+const clean = () => {
+    document.body.removeChild(document.getElementById('root'))
+    let root = document.createElement('div')
+    root.id = 'root'
+    document.body.appendChild(root)
 }
+
+
+
 
 console.log(window.location.origin)
 const router = new Navigo('/',  { hash: true });
@@ -48,18 +26,19 @@ const router = new Navigo('/',  { hash: true });
 var PagesControl = new Pages(router) 
 
 router
-    .on("/", () => {
-        // router.navigate('/posts/123')
+    .on("/", ({data}) => {
+        console.log('home', router.getCurrentLocation())
+    //    if(router.getCurrentLocation().url != ''){
+    //        router.navigate(router.getCurrentLocation().url)
+    //    }
+        clean()
         PagesControl.home()
     })
-    .on("/posts/:name", () => {
+    .on("/posts/:name", ({data}) => {
+        console.log('post', window.location)
 
-        document.body.removeChild(document.getElementById('root'))
-
-        let root = document.createElement('div')
-        root.id = 'root'
-        document.body.appendChild(root)
-        test()
+        clean()
+        PagesControl.renderPost(data.name)
     })
     .resolve(window.location.pathname);
 

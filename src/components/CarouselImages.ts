@@ -163,8 +163,11 @@ class CarouselImages extends ShadowElement {
             })
         }
 
-        this.shadowElementRoot.appendChild(this.BtnNext.root)
-        this.shadowElementRoot.appendChild(this.BtnPrev.root)
+        if(images.length > 1){
+            this.shadowElementRoot.appendChild(this.BtnNext.root)
+            this.shadowElementRoot.appendChild(this.BtnPrev.root)
+        }
+        
 
         
     }

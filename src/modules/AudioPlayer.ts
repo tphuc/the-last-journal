@@ -9,11 +9,15 @@ class AudioPlayer {
     onPause: () => void
     isPlaying: boolean = false;
 
+    static Audios = [];
+
     constructor(url: string){
         this.audio = new Audio(url);
         this.audio.loop = false;
         this.audio.volume = 0.5
         this.audio.onended = () => this.onFinish()
+
+        AudioPlayer.Audios.push(this.audio)
     }
 
     setUrl = (url: string) => {
@@ -28,6 +32,14 @@ class AudioPlayer {
         this.audio.volume = 0.5
         this.audio.play()
         
+    }
+
+    static clean = () => {
+        AudioPlayer.Audios.map((item: HTMLAudioElement) => {
+            item.pause()
+        })
+
+        AudioPlayer.Audios = []
     }
 
 

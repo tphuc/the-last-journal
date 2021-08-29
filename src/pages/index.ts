@@ -2,6 +2,10 @@ import { Color } from "../../src/configs/Color";
 import { BaseElement } from "../../src/components/BaseElement"
 import { ShadowElement } from "../../src/components/ShadowElement";
 import anime from 'animejs';
+import { firestore } from "../../src/firebase";
+import { Screen } from "../../src/components/Screen";
+import { HeaderBarController } from "../../src/components/HeaderBar";
+import { AudioPlayer } from "../../src/modules/AudioPlayer";
 const Logo = require('../assets/logo_t.png')
 
 
@@ -9,17 +13,57 @@ function li(a, b, n) {
     return (1 - n) * a + n * b;
   }
   
+
+// const data = {
+// 	"title": "",
+// 	"pages": [
+// 		{
+// 			"music": [],
+// 			"media": [
+// 				{
+// 					"type": "img",
+// 					"url": "https://firebasestorage.googleapis.com/v0/b/last-journal.appspot.com/o/images%2F181028-migrant-caravan-al-0906.jpg?alt=media&token=e99b2f11-50c2-49ff-92e3-72759628d46e"
+// 				},
+// 				{
+// 					"type": "img",
+// 					"url": "https://firebasestorage.googleapis.com/v0/b/last-journal.appspot.com/o/images%2Fcaravan_distance.png?alt=media&token=52c2b1ec-2a3f-4c7b-b580-36f898ac8858"
+// 				},
+// 				{
+// 					"type": "img",
+// 					"url": "https://firebasestorage.googleapis.com/v0/b/last-journal.appspot.com/o/images%2FScreen%20Shot%202021-08-28%20at%202.12.01%20PM.png?alt=media&token=d0a923f9-0018-4a92-b0ba-fee636bf833e"
+// 				},
+// 				{
+// 					"type": "img",
+// 					"url": "https://firebasestorage.googleapis.com/v0/b/last-journal.appspot.com/o/images%2FScreen%20Shot%202021-08-28%20at%202.11.43%20PM.png?alt=media&token=10c77ad2-6f5e-43f9-ba62-c6d4e9be6da0"
+// 				},
+// 				{
+// 					"type": "img",
+// 					"url": "https://firebasestorage.googleapis.com/v0/b/last-journal.appspot.com/o/images%2FScreen%20Shot%202021-08-28%20at%202.13.03%20PM.png?alt=media&token=e9ca371a-ed70-432f-a055-d81a50a3aeea"
+// 				}
+// 			],
+// 			"content": "<p><em>Let's have a look at the migrant Caravan. Thousands of people fled their South American homes to look for a better future in the U.S. The trip covered two thousand miles in one and a half months in order to be on time for the America midterm elections as a political statement against President Trump. This means they walked an average of 45 miles a day on flip-flops or barefoot, 45 miles (72km) a day!</em></p>",
+// 			"mediaType": "grid"
+// 		}
+// 	]
+// }
   
 
-const fakeData = [
+const posts = [
     {
-        name: "Introduction: President and the Press",
-        url: '/posts/123',
-        timestamp: new Date()
+        name: "Greeting: A word from JFK",
+        id: 'greeting',
+    },
+
+]
+
+const fallOfTheCabalSeries = [
+    {
+        name: "The end of the world as we know it: Things that make you go hmmm...",
+        id: 'FOC1',
     },
     {
-        name: "Fall of the Cabal (part 1): Things that make you go hmmm",
-        timestamp: new Date()
+        name: "Down the rabbit hole...",
+        id: 'FOC2',
     },
 ]
 
@@ -33,6 +77,7 @@ class Pages {
     }
 
     home = () => {
+        AudioPlayer.clean()
         var Centered = new ShadowElement('div', {
             position: "relative",
             height:"1500px",
@@ -110,15 +155,7 @@ class Pages {
         //     duration: 1120,
         //     delay: (el, i) => 150 * (i + 1)
         // })
-        anime.timeline()
-  
-            .add({
-                targets: title.root.querySelectorAll('.letter'),
-                opacity: [0, 1],
-                easing: "easeInOutQuad",
-                duration: 2250,
-                delay: (el, i) => 150 * (i + 1)
-            })
+        
         var root = document.getElementById('root');
         var inputWrapper = new BaseElement('div', {
             position: "relative"
@@ -164,7 +201,7 @@ class Pages {
 
        
        
-        fakeData.map((item) => {
+        posts.map((item) => {
             let El = new BaseElement('a', {
                 display:"block",
                 color: Color.Primary1,
@@ -175,7 +212,29 @@ class Pages {
 
             El.root.innerText = item.name;
             El.root.onclick = () => {
-                this.router.navigate(item.url)
+                this.router.navigate(`/posts/${item.id}`)
+            }
+           postWrapper.root.appendChild(El.root)
+        })
+
+        var fallofcabal = new BaseElement('p', {
+            marginTop:'50px',
+            color: Color.Primary1
+        })
+        fallofcabal.root.innerText = 'The fall of the cabal series:'
+        postWrapper.root.appendChild(fallofcabal.root)
+        fallOfTheCabalSeries.map((item) => {
+            let El = new BaseElement('a', {
+                display:"block",
+                color: Color.Primary1,
+                padding:"10px 0px",
+                cursor:"pointer",
+                textDecoration:"underline"
+            })
+
+            El.root.innerText = item.name;
+            El.root.onclick = () => {
+                this.router.navigate(`/posts/${item.id}`)
             }
            postWrapper.root.appendChild(El.root)
         })
@@ -204,8 +263,75 @@ class Pages {
         copyright.root.innerText = 'Copyright © 2021-2022'
         Centered.shadowElementRoot.appendChild(copyright.root)
 
+        anime.timeline()
+  
+        .add({
+            targets: title.root.querySelectorAll('.letter'),
+            opacity: [0, 1],
+            easing: "easeInOutQuad",
+            duration: 1250,
+            delay: (el, i) => 50 * (i + 1)
+        })
+        .add({
+            targets: postWrapper.root,
+            opacity: [0, 1],
+            easing: "easeInOutQuad",
+            duration: 1000,
+        })
+
 
     }
+
+
+
+
+
+
+    renderPost = async (id: string) => {
+
+        AudioPlayer.clean()
+        let res = await firestore.collection('posts').doc(id).get()
+        let data = null;
+        if(res.exists){
+            data = res.data()
+        }
+    
+        let page = new Screen(data);
+    
+        let Flex = new BaseElement('div', {
+            display: "flex",
+            flexDirection: "column",
+            width: "100vw",
+            height: "100vh"
+        })
+    
+    
+        let root = document.getElementById('root')
+        let HeaderBar = new HeaderBarController(data?.title || '')
+        HeaderBar.Logo.root.onclick = () => {
+            this.router.navigate('/')
+        }
+        HeaderBar.Backlogo.root.onclick = () => {
+            this.router.navigate('/')
+        }
+
+
+        root.appendChild(Flex.root)
+        Flex.root.appendChild(HeaderBar.root)
+    
+        HeaderBar.SoundPlayerIcon.onPlay = () => {
+            page.AudioBackgroundSequence.play()
+        }
+    
+        HeaderBar.SoundPlayerIcon.onPause = () => {
+            page.AudioBackgroundSequence.pause()
+        }
+    
+    
+    
+        Flex.root.appendChild(page.root)
+    }
+
 
 }
 

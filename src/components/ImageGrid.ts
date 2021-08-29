@@ -105,7 +105,7 @@ class ImageGrid extends ShadowElement {
             {
                 wrapperInitialStyle: {
                     display: 'flex',
-                    flexWrap: 'wrap',
+                    // flexWrap: 'wrap',
                     padding: '0 4px',
                 },
                 styleSheet: {
@@ -113,7 +113,8 @@ class ImageGrid extends ShadowElement {
                         'overflow-y':"scroll"
                     },
                     '.column': {
-                        'flex': '25%',
+                        'flex-grow': 1,
+                        'flex-basis':'auto',
                         'max-width': '48%',
                         'padding': '0 4px',
                     },
@@ -134,6 +135,9 @@ class ImageGrid extends ShadowElement {
                             '-ms-flex': '50%',
                             'flex': '50%',
                             'max-width': '50%'
+                        },
+                        '.grid-wrap':{
+                            'flex-direction':"row"
                         }
                     },
                     '@media screen and (max-width: 800px)': {
@@ -141,6 +145,9 @@ class ImageGrid extends ShadowElement {
                             '-ms-flex': '100%',
                             'flex': '100%',
                             'max-width': '100%'
+                        },
+                        '.grid-wrap':{
+                            'flex-direction':"column"
                         }
                     },
                     ':host::-webkit-scrollbar' :{
@@ -183,6 +190,8 @@ class ImageGrid extends ShadowElement {
             this.maxImgPerCol = options.maxImgPerCol
         }
 
+        this.shadowElementRoot.className = 'grid-wrap'
+        console.log('max cols', this.maxCols, 'imgs per col', this.maxImgPerCol, options)
         for (var i = 0; i < this.maxCols; i++) {
             var col = new BaseElement('div', {})
             col.root.className = 'column'
@@ -190,11 +199,16 @@ class ImageGrid extends ShadowElement {
             this.shadowElementRoot.appendChild(col.root);
         }
 
+    
+
         for (var i = 0; i < images.length; i++) {
-            var colIndex = Math.round(i / this.maxImgPerCol);
+            var colIndex = Math.floor(i / this.maxImgPerCol);
+            console.log(i , this.maxImgPerCol, colIndex)
             var img = new ImageMedia(images[i].url);
-            this._cols[colIndex].root.appendChild(img.root)
+            this._cols[colIndex]?.root?.appendChild(img.root)
         }
+
+        console.log('--------------')
 
     }
 
