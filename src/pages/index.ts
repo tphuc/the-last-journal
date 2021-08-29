@@ -62,8 +62,12 @@ const fallOfTheCabalSeries = [
         id: 'FOC1',
     },
     {
-        name: "P2. Down the rabbit hole...",
+        name: "P2. Down the rabbit hole.",
         id: 'FOC2',
+    },
+    {
+        name: "P3. The Alien Invasion.",
+        id: 'FOC3',
     },
 ]
 
@@ -221,7 +225,7 @@ class Pages {
             marginTop:'50px',
             color: Color.Primary1
         })
-        fallofcabal.root.innerText = 'The fall of the cabal series:'
+        fallofcabal.root.innerText = 'The fall of the Cabal series (10 parts)'
         postWrapper.root.appendChild(fallofcabal.root)
         fallOfTheCabalSeries.map((item) => {
             let El = new BaseElement('a', {
