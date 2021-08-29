@@ -58,11 +58,11 @@ const posts = [
 
 const fallOfTheCabalSeries = [
     {
-        name: "The end of the world as we know it: Things that make you go hmmm...",
+        name: "P1. The end of the world as we know it: Things that make you go hmmm...",
         id: 'FOC1',
     },
     {
-        name: "Down the rabbit hole...",
+        name: "P2. Down the rabbit hole...",
         id: 'FOC2',
     },
 ]
