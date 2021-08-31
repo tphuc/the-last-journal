@@ -386,10 +386,10 @@ class Pages {
         let root = document.getElementById('root')
         let HeaderBar = new HeaderBarController(data?.title || '')
         HeaderBar.Logo.root.onclick = () => {
-            this.router.navigate('/')
+            window.location.replace('/')
         }
         HeaderBar.Backlogo.root.onclick = () => {
-            this.router.navigate('/')
+            window.location.replace('/')
         }
 
 

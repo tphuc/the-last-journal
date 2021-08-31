@@ -28,8 +28,13 @@ router
     //    if(router.getCurrentLocation().url != ''){
     //        router.navigate(router.getCurrentLocation().url)
     //    }
-        clean()
-        PagesControl.home()
+        if(router.getCurrentLocation().url?.includes('posts'))
+            router.navigate(router.getCurrentLocation().url)
+        else{
+            clean()
+            PagesControl.home()
+        }
+       
     })
     .on("/posts/:name", ({data}) => {
 
