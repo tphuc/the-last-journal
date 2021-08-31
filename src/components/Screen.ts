@@ -32,6 +32,8 @@ class Screen extends ShadowElement {
 
     MediaPages: any[];
 
+    LastActiveIndex: number = 0;
+
     AudioBackgroundSequence: AudioSequence;
 
     data: any = null;
@@ -214,9 +216,17 @@ class Screen extends ShadowElement {
             this.MediaPages[this.activePage]?.MediaNodes?.map((node: MediaItem) => {
                 node?.setIframeVisibility('hidden')
             })
-            this.MediaContainer.root.removeChild(this.MediaPages[this.activePage].root)
+ 
+            if(data.pages[carouselText.index].media?.length){
+                this.MediaContainer.root.removeChild(this.MediaPages[this.LastActiveIndex].root)
+            }
+                
             this.activePage = carouselText.index
-            this.MediaContainer.root.appendChild(this.MediaPages[this.activePage].root)
+            if(data.pages[carouselText.index].media?.length){
+                this.LastActiveIndex = carouselText.index
+                this.MediaContainer.root.appendChild(this.MediaPages[this.activePage].root)
+            }
+                
             this.AudioBackgroundSequence.currentSessionIndex = this.activePage
             this.Pagination.currentPage = carouselText.index + 1
             this.Pagination.updatePercentage()

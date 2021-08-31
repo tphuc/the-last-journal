@@ -62,14 +62,33 @@ const fallOfTheCabalSeries = [
         id: 'FOC1',
     },
     {
-        name: "P2. Down the rabbit hole.",
+        name: "P2. Down the rabbit hole",
         id: 'FOC2',
     },
     {
-        name: "P3. The Alien Invasion.",
+        name: "P3. The Alien Invasion",
         id: 'FOC3',
     },
 ]
+
+const covid19Series = [
+    {
+        name: 'Covid19 Plandemic and Predictive Programming',
+        id:'CV19-PLANDEMIC'
+    },
+    {
+        name: 'PCR Testing: A Critical Examination',
+        id:'PCR-CriticalExamination'
+    }
+]
+
+const promotesNRelated = [
+    {
+        name: "The Mirror Project documentay P1",
+        id: 'TMP1',
+    },
+]
+
 
 class Pages {
 
@@ -181,7 +200,7 @@ class Pages {
         SearchInput.root.setAttribute('type', 'text')
         // inputWrapper.root.appendChild(SearchInput.root)
 
-        var tableOfContent = new BaseElement('h4', {
+        var tableOfContent = new BaseElement('h3', {
             color: Color.Primary1
         })
         tableOfContent.root.innerText = 'Table of contents'
@@ -221,9 +240,11 @@ class Pages {
            postWrapper.root.appendChild(El.root)
         })
 
+        //-----------------------------------------
         var fallofcabal = new BaseElement('p', {
             marginTop:'50px',
-            color: Color.Primary1
+            color: Color.Primary1,
+            fontWeight:600,
         })
         fallofcabal.root.innerText = 'The fall of the Cabal series (10 parts)'
         postWrapper.root.appendChild(fallofcabal.root)
@@ -242,6 +263,58 @@ class Pages {
             }
            postWrapper.root.appendChild(El.root)
         })
+
+        //-----------------------------------------
+         var covid19 = new BaseElement('p', {
+            marginTop:'50px',
+            fontWeight:600,
+            color: Color.Primary1
+        })
+        covid19.root.innerText = 'Covid 19'
+        postWrapper.root.appendChild(covid19.root)
+        covid19Series.map((item) => {
+            let El = new BaseElement('a', {
+                display:"block",
+                color: Color.Primary1,
+                padding:"10px 0px",
+                cursor:"pointer",
+                textDecoration:"underline"
+            })
+
+            El.root.innerText = item.name;
+            El.root.onclick = () => {
+                this.router.navigate(`/posts/${item.id}`)
+            }
+           postWrapper.root.appendChild(El.root)
+        })
+
+        //-----------------------------------------
+        var promote = new BaseElement('p', {
+            marginTop:'50px',
+            fontWeight:600,
+            color: Color.Primary1
+        })
+        promote.root.innerText = 'Promotes and related contents'
+        postWrapper.root.appendChild(promote.root)
+        promotesNRelated.map((item) => {
+            let El = new BaseElement('a', {
+                display:"block",
+                color: Color.Primary1,
+                padding:"10px 0px",
+                cursor:"pointer",
+                textDecoration:"underline"
+            })
+
+            El.root.innerText = item.name;
+            El.root.onclick = () => {
+                this.router.navigate(`/posts/${item.id}`)
+            }
+           postWrapper.root.appendChild(El.root)
+        })
+
+
+
+
 
         var disclaimerTitle = new BaseElement('h4', {
             color: Color.Primary1

@@ -191,7 +191,7 @@ class ImageGrid extends ShadowElement {
         }
 
         this.shadowElementRoot.className = 'grid-wrap'
-        console.log('max cols', this.maxCols, 'imgs per col', this.maxImgPerCol, options)
+
         for (var i = 0; i < this.maxCols; i++) {
             var col = new BaseElement('div', {})
             col.root.className = 'column'
@@ -203,12 +203,11 @@ class ImageGrid extends ShadowElement {
 
         for (var i = 0; i < images.length; i++) {
             var colIndex = Math.floor(i / this.maxImgPerCol);
-            console.log(i , this.maxImgPerCol, colIndex)
+
             var img = new ImageMedia(images[i].url);
             this._cols[colIndex]?.root?.appendChild(img.root)
         }
 
-        console.log('--------------')
 
     }
 

@@ -5,9 +5,7 @@ import Navigo from "navigo";
 import { Pages } from "./pages";
 import { firestore } from './firebase'
 const data = require('./testdata.json')
-window.onpopstate = () => {
-    console.log(window.location.origin)
-}
+
 
 
 const clean = () => {
@@ -20,14 +18,13 @@ const clean = () => {
 
 
 
-console.log(window.location.origin)
+
 const router = new Navigo('/',  { hash: true });
 
 var PagesControl = new Pages(router) 
 
 router
     .on("/", ({data}) => {
-        console.log('home', router.getCurrentLocation())
     //    if(router.getCurrentLocation().url != ''){
     //        router.navigate(router.getCurrentLocation().url)
     //    }
@@ -35,7 +32,7 @@ router
         PagesControl.home()
     })
     .on("/posts/:name", ({data}) => {
-        console.log('post', window.location)
+
 
         clean()
         PagesControl.renderPost(data.name)
