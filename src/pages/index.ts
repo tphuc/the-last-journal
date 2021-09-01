@@ -79,6 +79,10 @@ const covid19Series = [
     {
         name: 'PCR Testing: A Critical Examination',
         id:'PCR-CriticalExamination'
+    },
+    {
+        name: 'PCR Testing: An Instrument For Manipulation?',
+        id:'PCR-Manipulation-Instrument'
     }
 ]
 
