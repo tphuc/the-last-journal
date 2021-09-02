@@ -83,7 +83,7 @@ const covid19Series = [
     {
         name: 'PCR Testing: An Instrument For Manipulation?',
         id:'PCR-Manipulation-Instrument'
-    }
+    },
 ]
 
 const promotesNRelated = [
@@ -91,6 +91,10 @@ const promotesNRelated = [
         name: "The Mirror Project documentay P1",
         id: 'TMP1',
     },
+    {
+        name:"World Doctors Alliance (WDA) in Berlin, 10th October 2020",
+        id: 'WDA'
+    }
 ]
 
 
