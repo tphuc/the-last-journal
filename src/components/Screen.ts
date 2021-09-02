@@ -111,7 +111,7 @@ class Screen extends ShadowElement {
                         },
                         '.content-wrapper': {
                             width:"100%",
-                            "max-height": '52vh'
+                            "max-height": 'calc( 76vh - 40px )'
                         },
                     },
                     '::-webkit-scrollbar': {
