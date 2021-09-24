@@ -66,8 +66,36 @@ const fallOfTheCabalSeries = [
         id: 'FOC2',
     },
     {
-        name: "P3. The Alien Invasion",
+        name: "P3. The alien invasion",
         id: 'FOC3',
+    },
+    {
+        name: "P4. Childlovers everywhere",
+        id: 'FOC4',
+    },
+    {
+        name: "P5. Children, Art & Pizza",
+        id: 'FOC5',
+    },
+    {
+        name: "P6. Major media manipulation",
+        id: 'FOC6',
+    },
+    {
+        name: "P7. Witches and warlock",
+        id: 'FOC7',
+    },
+    {
+        name: "P8. Beyond kings & queen",
+        id: 'FOC8',
+    },
+    {
+        name: "P9. A dawn of a new world",
+        id: 'FOC9',
+    },
+    {
+        name: "P10. The return of the kings",
+        id: 'FOC10',
     },
 ]
 
